@@ -1,0 +1,23 @@
+COMANDOS
+
+SUDO APT UPDATE:
+Actualiza repos del sistema
+
+SUDO APT INSTALL (NGINX):
+Busca en los reposiorios si existen los paquetes y los instala.
+
+SUDO UFW ENABLE:
+Habilita el firewall.
+
+SUDO SYSTEMCTL STATUS:
+Comprueba si esta funcionando.
+
+
+EJERCICIO
+
+/var/www/sitioA/index.html -> http::/
+/var/www/html/ index.html -> https::/
+
+INSTALL.SH
+
+SCP INSTALL.SH azureuser@ip:/home(azureuser
