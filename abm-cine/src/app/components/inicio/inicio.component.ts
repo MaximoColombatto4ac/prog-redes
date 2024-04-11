@@ -1,19 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Pelicula } from "../../models/pelicula";
-import { PeliculaService } from "../../services/pelicula.service";
-
+import { PeliculaComponent } from "../pelicula/pelicula.component";
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PeliculaComponent, RouterLink],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
-  listaPeliculas: Pelicula[] = [];
-  servicio: PeliculaService = inject(PeliculaService);
-  constructor(){
-    this.listaPeliculas = this.servicio.obtenerPeliculas();
-  }
+  
 }

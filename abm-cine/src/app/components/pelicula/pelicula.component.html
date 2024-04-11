@@ -1,1 +1,8 @@
 
+<div *ngFor="let pelicula of servicio.listaPeliculas" class="movie-card">
+    <div class="movie-info">
+        <p>ID: {{ pelicula.id }}</p>
+        <p>Nombre: {{ pelicula.nombre }}</p>
+        <p>Duración: {{ pelicula.duracion }}</p>
+    </div>
+</div>

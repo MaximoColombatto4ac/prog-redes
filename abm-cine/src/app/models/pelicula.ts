@@ -1,5 +1,5 @@
 export interface Pelicula {
-    id: string;
+    id: number;
     nombre: string;
     duracion: number;
 }
