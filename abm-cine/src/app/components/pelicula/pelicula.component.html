@@ -1,13 +1,13 @@
 
-<div *ngFor="let pelicula of servicio.listaPeliculas" class="movie-card">
+<div *ngFor="let item of listaPeliculas" class="movie-card">
     <div class="movie-info">
-        <p>ID: {{ pelicula.id }}</p>
-        <p>Nombre: {{ pelicula.nombre }}</p>
-        <p>Duración: {{ pelicula.duracion }}</p>
+        <p>ID: {{ item.id }}</p>
+        <p>Nombre: {{ item.nombre }}</p>
+        <p>Duración: {{ item.duracion }}</p>
     </div>
     <div>
-        <button (click)="eliminarPelicula(pelicula.id)">Eliminar</button>
-        <button (click)="editarPelicula(pelicula.id)">Editar</button>
-        <button (click)="verMas(pelicula.id)">Ver más</button>
+        <button (click)="eliminarPelicula(item.id)">Eliminar</button>
+        <button (click)="editarPelicula(item.id)">Editar</button>
+        <button (click)="verMas(item.id)">Ver más</button>
     </div>
 </div>

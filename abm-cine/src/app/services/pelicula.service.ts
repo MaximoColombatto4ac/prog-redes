@@ -1,31 +1,25 @@
 import { Injectable } from "@angular/core";
 import { Pelicula } from "../models/pelicula";
+import { HttpClient } from "@angular/common/http";
+import { enviroments } from "../../envairoments/envairoments";
+import { Observable, map } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
   })
 export class PeliculaService {
-    listaPeliculas: Pelicula[] = 
-    [
-        {
-            id: 1,
-            nombre: "La pelicula",
-            duracion: "1"
-        },
-        {
-            id: 2,
-            nombre: "La pelicula 2",
-            duracion: "2"
-        },
-        {
-            id: 3,
-            nombre: "La pelicula 3",
-            duracion: "3"
-        }
-    ];
-    obtenerPeliculas(): Pelicula[] {
-        return this.listaPeliculas;
+    listaPeliculas: Pelicula[] = [];
+    private myAppUrl: string;
+    private myApiUrl: string;
+
+    constructor(private http: HttpClient){
+        this.myAppUrl = enviroments.endpoint;
+        this.myApiUrl = "peliculas/"
     }
+    obtenerPeliculas(){
+        return this.http.get<Pelicula[]>(`${this.myAppUrl}${this.myApiUrl}`)
+    }
+
     obtenerPelicula(id: number): Pelicula {
         const pelicula = this.listaPeliculas.find(pelicula => pelicula.id == id);
         if (!pelicula) {
@@ -34,7 +28,7 @@ export class PeliculaService {
         return pelicula;
     }
     agregarPelicula(pelicula: Pelicula): void {
-        this.listaPeliculas.push(pelicula);
+        this.http.post(`${this.myAppUrl}${this.myApiUrl}`, pelicula)
     }
     actualizarPelicula(pelicula: Pelicula): void {
         const index = this.listaPeliculas.findIndex(pelicula => pelicula.id === pelicula.id);
@@ -43,8 +37,4 @@ export class PeliculaService {
     borrarPelicula(id: number): void {
         this.listaPeliculas = this.listaPeliculas.filter(pelicula => pelicula.id!== id);
     }
-    siguienteId(): number {
-        const maxId = Math.max(...this.listaPeliculas.map(pelicula => pelicula.id), 0);
-        return maxId + 1;
-      }
 }

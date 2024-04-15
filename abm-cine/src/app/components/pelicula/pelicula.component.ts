@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Pelicula } from "../../models/pelicula";
 import { PeliculaService } from "../../services/pelicula.service";
@@ -14,9 +14,21 @@ import { Router } from '@angular/router';
 export class PeliculaComponent {
   listaPeliculas: Pelicula[] = [];
   servicio: PeliculaService = inject(PeliculaService);
-  constructor(private router: Router){
-    this.listaPeliculas = this.servicio.obtenerPeliculas();
+  constructor(private router: Router, private peliculaService: PeliculaService){}
+
+  ngOnInit(){
+    this.obtenerPeliculas()
+    
+    
   }
+
+  obtenerPeliculas(){
+    this.peliculaService.obtenerPeliculas().subscribe((data: Pelicula[]) => {
+      this.listaPeliculas = data;
+      console.log(this.listaPeliculas);
+    })
+  }
+
   eliminarPelicula(id: number) {
       this.servicio.borrarPelicula(id);
   }
