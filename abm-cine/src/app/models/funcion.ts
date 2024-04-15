@@ -1,7 +1,8 @@
 import { Pelicula } from "./pelicula";
 
 export interface Funcion {
-    id: Number;
+    id: number;
     pelicula: Pelicula;
-    horario: Number;
+    horario: number;
+    sala: string;
 }

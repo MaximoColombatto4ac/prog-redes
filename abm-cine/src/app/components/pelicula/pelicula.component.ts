@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Pelicula } from "../../models/pelicula";
 import { PeliculaService } from "../../services/pelicula.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pelicula',
@@ -13,8 +14,18 @@ import { PeliculaService } from "../../services/pelicula.service";
 export class PeliculaComponent {
   listaPeliculas: Pelicula[] = [];
   servicio: PeliculaService = inject(PeliculaService);
-  constructor(){
+  constructor(private router: Router){
     this.listaPeliculas = this.servicio.obtenerPeliculas();
   }
+  eliminarPelicula(id: number) {
+      this.servicio.borrarPelicula(id);
+  }
 
+  editarPelicula(id: number) {
+      this.router.navigate(['/editar', id]);
+  }
+
+  verMas(id: number) {
+      this.router.navigate(['/detalle', id]);
+  }
 }

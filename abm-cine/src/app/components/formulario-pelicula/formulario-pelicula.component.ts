@@ -21,17 +21,14 @@ export class FormularioPeliculaComponent implements OnInit {
     this.pelicula = {
       id: -1,
       nombre: "",
-      duracion: 0
+      duracion: ""
     }
    }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       if (params['id']) {
-        // Si hay un ID en la ruta, cargamos la película para editar
         this.modoEditar = true;
-        // Aquí deberías cargar la película con el ID proporcionado, por ejemplo, desde un servicio.
-        // En este ejemplo, simplemente establecemos el ID de la película.
         this.pelicula = this.servicio.obtenerPelicula(params['id']);
       } 
     });
@@ -40,25 +37,10 @@ export class FormularioPeliculaComponent implements OnInit {
   guardarPelicula(event: Event) {
     event.preventDefault();
     if (this.modoEditar) {
-      // Aquí deberías agregar la lógica para guardar los cambios de la película editada.
-      console.log('Película editada:', this.pelicula);
+      this.servicio.actualizarPelicula(this.pelicula);
     } else {
-      // Aquí deberías agregar la lógica para guardar la nueva película.
-      console.log(this.pelicula);
-
       this.servicio.agregarPelicula(this.pelicula);
     }
-    // Reiniciamos la película después de guardarla
-    this.resetPelicula();
-  }
-
-  resetPelicula() {
-    let id = this.servicio.siguienteId();
-    // Reiniciamos la película para futuras operaciones de edición/agregado.
-    this.pelicula = {
-      id:id,
-      nombre: '',
-      duracion: 0
-    };
+    this.router.navigate(['/'])
   }
 }

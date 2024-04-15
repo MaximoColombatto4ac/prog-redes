@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { InicioComponent } from "./components/inicio/inicio.component";
 import { FormularioPeliculaComponent } from './components/formulario-pelicula/formulario-pelicula.component';
+import { DetalleComponent } from './components/detalle/detalle.component';
+import { FormularioFuncionComponent } from './components/formulario-funcion/formulario-funcion.component';
 
 export const routes: Routes = [
     {
@@ -17,5 +19,20 @@ export const routes: Routes = [
       path: 'editar/:id',
       component: FormularioPeliculaComponent,
       title: 'Editar Pelicula'
-    }
+    },
+    {
+      path: 'detalle/:id',
+      component: DetalleComponent,
+      title: 'Pagina Funciones'
+    },
+    {
+      path:'detalle/agregar/:id',
+      component: FormularioFuncionComponent,
+      title: 'Agregar Funcion'
+    },
+    {
+      path:'detalle/editar/:peliculaId/:funcionId',
+      component: FormularioFuncionComponent,
+      title: 'Editar Funcion'
+    },
 ];

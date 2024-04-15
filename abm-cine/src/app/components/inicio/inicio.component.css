@@ -1,17 +1,26 @@
+
+.container {
+  display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+}
 .button {
-    display: block;
-    width: 100%;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  .button:hover {
-    background-color: #0056b3;
-  }
-  
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+

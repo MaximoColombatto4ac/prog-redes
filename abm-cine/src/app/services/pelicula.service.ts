@@ -10,26 +10,26 @@ export class PeliculaService {
         {
             id: 1,
             nombre: "La pelicula",
-            duracion: 10
+            duracion: "1"
         },
         {
             id: 2,
             nombre: "La pelicula 2",
-            duracion: 20
+            duracion: "2"
         },
         {
             id: 3,
             nombre: "La pelicula 3",
-            duracion: 30
+            duracion: "3"
         }
     ];
     obtenerPeliculas(): Pelicula[] {
         return this.listaPeliculas;
     }
-    obtenerPelicula(id: Number): Pelicula {
-        const pelicula = this.listaPeliculas.find(pelicula => pelicula.id === id);
+    obtenerPelicula(id: number): Pelicula {
+        const pelicula = this.listaPeliculas.find(pelicula => pelicula.id == id);
         if (!pelicula) {
-            throw Error("poco pana, no se encontro la pelicula")
+            throw Error("poco pana, no se encontro la pelicula con id: " + id);
         }
         return pelicula;
     }
@@ -40,7 +40,7 @@ export class PeliculaService {
         const index = this.listaPeliculas.findIndex(pelicula => pelicula.id === pelicula.id);
         this.listaPeliculas[index] = pelicula;
     }
-    borrarPelicula(id: Number): void {
+    borrarPelicula(id: number): void {
         this.listaPeliculas = this.listaPeliculas.filter(pelicula => pelicula.id!== id);
     }
     siguienteId(): number {
