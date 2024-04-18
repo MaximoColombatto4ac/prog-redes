@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
-import { Pelicula } from "../../models/pelicula";
-import { PeliculaService } from "../../services/pelicula.service";
+import { Pelicula } from '../../models/pelicula';
+import { PeliculaService } from '../../services/pelicula.service';
 import { Funcion } from '../../models/funcion';
 import { FuncionService } from '../../services/funcion.service';
 
@@ -11,27 +11,43 @@ import { FuncionService } from '../../services/funcion.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './detalle.component.html',
-  styleUrl: './detalle.component.css'
+  styleUrl: './detalle.component.css',
 })
-export class DetalleComponent {
+export class DetalleComponent{
   listaFunciones: Funcion[] = [];
   pelicula!: Pelicula;
   peliculaService: PeliculaService = inject(PeliculaService);
   funcionService: FuncionService = inject(FuncionService);
-  constructor(private route: ActivatedRoute, private router: Router){
-    this.route.params.subscribe(params => {
-      this.pelicula = this.peliculaService.obtenerPelicula(params['id']);
-      this.listaFunciones = this.funcionService.obtenerFuncionesPorPelicula(params['id']);
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.params.subscribe((params) => {
+      this.peliculaService.obtenerPelicula(params['id']).subscribe((data) => {
+        console.log('pelicula = ', data);
+        this.pelicula = data;
+      });
     });
+    this.funcionService.obtenerFunciones().subscribe((data) => {
+      this.listaFunciones = data;
+      console.log('funciones = ', data);
+    });
+    this.cargarDatos();
   }
-  agregarFuncion(id: number) {
-    this.router.navigate(['/detalle/agregar', id]);
+  cargarDatos() {
+    this.listaFunciones = this.listaFunciones.filter(element => {
+        return element.pelicula.id === this.pelicula.id;
+    });
+    console.log('funciones filtradas = ', this.listaFunciones);
+}
+
+  agregarFuncion(idPelicula: number) {
+    this.router.navigate(['/detalle/agregar', idPelicula]);
   }
   editarFuncion(idPelicula: number, idFuncion: number) {
     this.router.navigate(['/detalle/editar', idPelicula, idFuncion]);
   }
   eliminarFuncion(id: number) {
-    this.funcionService.borrarFuncion(id)
-    this.listaFunciones= this.funcionService.obtenerFuncionesPorPelicula(this.pelicula.id)
+    this.funcionService.borrarFuncion(id).subscribe((data) => {
+      this.cargarDatos();
+    });
   }
 }

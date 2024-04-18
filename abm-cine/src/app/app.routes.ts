@@ -26,12 +26,12 @@ export const routes: Routes = [
       title: 'Pagina Funciones'
     },
     {
-      path:'detalle/agregar/:id',
+      path:'detalle/agregar/:idPelicula',
       component: FormularioFuncionComponent,
       title: 'Agregar Funcion'
     },
     {
-      path:'detalle/editar/:peliculaId/:funcionId',
+      path:'detalle/editar/:idPelicula/:funcionId',
       component: FormularioFuncionComponent,
       title: 'Editar Funcion'
     },

@@ -1,64 +1,39 @@
 import { Injectable } from "@angular/core";
 import { Funcion } from "../models/funcion";
+import { enviroments } from "../../envairoments/envairoments";
+import { HttpClient } from "@angular/common/http";
+import { Observable, map } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
   })
 export class FuncionService {
-    listaFunciones: Funcion[] = 
-    [
-        {
-            id: 1,
-            pelicula: {
-                id: 1,
-                nombre: "La pelicula",
-                duracion: "1"
-            },
-            horario: 1,
-            sala: "sala 1"
-        },
-        {
-            id: 2,
-            pelicula: {
-                id: 2,
-                nombre: "La pelicula 2",
-                duracion: "2"
-            },
-            horario: 2,
-            sala: "sala 2"
-        }
-    ];
-    obtenerFunciones(): Funcion[] {
-        return this.listaFunciones;
+    private myAppUrl: string;
+    private myApiUrl: string;
+
+    constructor(private http: HttpClient){
+        this.myAppUrl = enviroments.endpoint;
+        this.myApiUrl = "funciones/"
+    }
+    obtenerFunciones() {
+        return this.http.get<Funcion[]>(`${this.myAppUrl}${this.myApiUrl}`);
     }
 
-    obtenerFuncion(id: number): Funcion {
-        const funcion = this.listaFunciones.find(funcion => funcion.id == id);
-        if (!funcion) {
-            throw Error("No se encontró la función con id: " + id);
-        }
-        return funcion;
+    obtenerFuncion(id: number) {
+        return this.http.get<Funcion>(`${this.myAppUrl}${this.myApiUrl}${id}`);
     }
 
-    agregarFuncion(funcion: Funcion): void {
-        this.listaFunciones.push(funcion);
+    agregarFuncion(funcion: Funcion) {
+        this.http.post(`${this.myAppUrl}${this.myApiUrl}`, {funcion}).subscribe();
     }
 
     actualizarFuncion(funcion: Funcion): void {
-        const index = this.listaFunciones.findIndex(fun => fun.id == funcion.id);
-        this.listaFunciones[index] = funcion;
+        this.http.put(`${this.myAppUrl}${this.myApiUrl}`, {funcion}).subscribe();
     }
 
-    borrarFuncion(id: number): void {
-        this.listaFunciones = this.listaFunciones.filter(funcion => funcion.id !== id);
+    borrarFuncion(id: number) {
+        return this.http.delete(`${this.myAppUrl}${this.myApiUrl}${id}`);
     }
-
-    siguienteId(): number {
-        const maxId = Math.max(...this.listaFunciones.map(funcion => funcion.id), 0);
-        return maxId + 1;
-    }
-    obtenerFuncionesPorPelicula(peliculaId: number): Funcion[] {
-        return this.listaFunciones.filter(funcion => funcion.pelicula.id == peliculaId);
-    }
+    
     
 }

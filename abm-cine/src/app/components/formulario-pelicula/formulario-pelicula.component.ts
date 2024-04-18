@@ -29,7 +29,9 @@ export class FormularioPeliculaComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.modoEditar = true;
-        this.pelicula = this.servicio.obtenerPelicula(params['id']);
+        this.servicio.obtenerPelicula(params['id']).subscribe(data => {
+          this.pelicula = data;
+        });
       } 
     });
   }
@@ -37,6 +39,7 @@ export class FormularioPeliculaComponent implements OnInit {
   guardarPelicula(event: Event) {
     event.preventDefault();
     if (this.modoEditar) {
+      console.log(this.pelicula);
       this.servicio.actualizarPelicula(this.pelicula);
     } else {
       this.servicio.agregarPelicula(this.pelicula);

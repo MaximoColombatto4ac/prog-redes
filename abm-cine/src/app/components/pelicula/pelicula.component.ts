@@ -14,23 +14,21 @@ import { Router } from '@angular/router';
 export class PeliculaComponent {
   listaPeliculas: Pelicula[] = [];
   servicio: PeliculaService = inject(PeliculaService);
-  constructor(private router: Router, private peliculaService: PeliculaService){}
+  constructor(private router: Router, private peliculaService: PeliculaService){
+    this.obtenerPeliculas()}
 
-  ngOnInit(){
-    this.obtenerPeliculas()
-    
-    
-  }
 
   obtenerPeliculas(){
     this.peliculaService.obtenerPeliculas().subscribe((data: Pelicula[]) => {
       this.listaPeliculas = data;
-      console.log(this.listaPeliculas);
     })
   }
 
   eliminarPelicula(id: number) {
-      this.servicio.borrarPelicula(id);
+      this.servicio.borrarPelicula(id).subscribe(data => {
+        this.obtenerPeliculas()
+      });
+      
   }
 
   editarPelicula(id: number) {
